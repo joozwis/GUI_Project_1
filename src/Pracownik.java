@@ -22,6 +22,8 @@ public abstract class Pracownik implements Comparable<Pracownik> {
         return imie;
     }
 
+    /// jakis test
+
     public LocalDate getDataUrodzenia() {
         return dataUrodzenia;
     }
