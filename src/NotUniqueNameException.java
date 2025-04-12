@@ -1,5 +1,6 @@
-import java.io.IOException;
+public class NotUniqueNameException extends RuntimeException {
+    public NotUniqueNameException(String msg) {
+        super(msg);
+    }
 
-public class NotUniqueNameException extends IOException {
-    
 }

@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Comparator;
 
 public abstract class Pracownik implements Comparable<Pracownik> {
 
@@ -8,6 +10,10 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     private String dzialPracownikow;
     private boolean czyZdrowy;
 
+
+    /// /////// DODAC SPRAWDZANIE, CZY PRACOWNIK MA WIECEJ NIZ 18 LAT!!!!!!
+    /// /////// DODAC SPRAWDZANIE, CZY PRACOWNIK MA WIECEJ NIZ 18 LAT!!!!!!
+    /// /////// DODAC SPRAWDZANIE, CZY PRACOWNIK MA WIECEJ NIZ 18 LAT!!!!!!
 
     public Pracownik(String imie, String nazwisko, int dzien, int miesiac, int rok, String dzialPracownikow) {
         this.imie = imie;
@@ -19,25 +25,22 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     }
 
     public String getImie() {
-        return imie;
+        return this.imie;
     }
-
-    /// jakis test
 
     public LocalDate getDataUrodzenia() {
-        return dataUrodzenia;
+        return this.dataUrodzenia;
     }
+
+    public int getWiek() {
+        return Period.between(LocalDate.now(), this.dataUrodzenia).getYears();
+    }
+
 
     @Override
-    public int compareTo(Pracownik o) {
-
-        int porownajImie = this.getImie().compareTo(o.getImie());
-
-        if (porownajImie != 0) {
-            return porownajImie;
-        }
-
-        return this.dataUrodzenia.getYear() - o.dataUrodzenia.getYear();
+    public int compareTo(Pracownik p1) {
+        return Comparator.comparing((Pracownik p2) -> p2.getImie())
+                .thenComparing(p2 -> p2.getDataUrodzenia())
+                .compare(this, p1);
     }
-
 }
