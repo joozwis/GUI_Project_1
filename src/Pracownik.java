@@ -24,6 +24,7 @@ public abstract class Pracownik implements Comparable<Pracownik> {
 
     }
 
+    
     public String getImie() {
         return this.imie;
     }

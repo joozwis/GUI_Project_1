@@ -23,6 +23,7 @@ public class DzialPracownikow {
         new DzialPracownikow(nazwaDzialu.toLowerCase());
     }
 
+    
     public void wypiszPracownikow() {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
