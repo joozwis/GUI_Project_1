@@ -10,20 +10,25 @@ public class DzialPracownikow {
         this.listaPracownikow = new ArrayList<>();
     }
 
+    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
+    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
+    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
+    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
+
     private boolean czyDzialJestUnikalny(String nazwaDzialu) {
         return unikalnyDzial.contains(nazwaDzialu.toLowerCase());
     }
 
-    public void utworzDzial(String nazwaDzialu) {
+    public DzialPracownikow utworzDzial(String nazwaDzialu) {
         if (!czyDzialJestUnikalny(nazwaDzialu.toLowerCase()))
             throw new NotUniqueNameException("Dzial o takiej nazwie znajduje sie juz w naszej bazie!");
 
         System.out.println("Dzial o nazwie: " + nazwaDzialu + "  zostal utworzony!");
         unikalnyDzial.add(nazwaDzialu.toLowerCase());
-        new DzialPracownikow(nazwaDzialu.toLowerCase());
+        return new DzialPracownikow(nazwaDzialu.toLowerCase());
     }
 
-    
+
     public void wypiszPracownikow() {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
