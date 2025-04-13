@@ -1,3 +1,6 @@
+import exceptions.EmptyListException;
+import exceptions.NotUniqueNameException;
+
 import java.util.*;
 
 public class DzialPracownikow {

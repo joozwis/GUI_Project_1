@@ -1,7 +1,8 @@
+import exceptions.IncorrectBirthYearException;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class Pracownik implements Comparable<Pracownik> {
@@ -10,10 +11,10 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     private String imie;
     private String nazwisko;
     private LocalDate dataUrodzenia;
-    private String dzialPracownikow;
+    private DzialPracownikow dzialPracownikow;
     private boolean czyZdrowy;
 
-    public Pracownik(String imie, String nazwisko, int dzien, int miesiac, int rok, String dzialPracownikow) {
+    public Pracownik(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow) {
         int aktualnyRok = LocalDate.now().getYear();
         if ((aktualnyRok - rok) < 18)
             throw new IncorrectBirthYearException("Pracownik musi miec minimum 18 lat. Wprowadz poprawny rok urodzenia!");
@@ -31,6 +32,10 @@ public abstract class Pracownik implements Comparable<Pracownik> {
         return this.imie;
     }
 
+    public String getNazwisko() {
+        return this.nazwisko;
+    }
+
     public LocalDate getDataUrodzenia() {
         return this.dataUrodzenia;
     }
@@ -39,6 +44,13 @@ public abstract class Pracownik implements Comparable<Pracownik> {
         return Period.between(this.dataUrodzenia, LocalDate.now()).getYears();
     }
 
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
 
     @Override
     public int compareTo(Pracownik p) {
@@ -46,8 +58,11 @@ public abstract class Pracownik implements Comparable<Pracownik> {
         if (porownajImie != 0) {
             return porownajImie;
         }
-        //MOZE MIEC TO SAMO IMIE + YEAR TRZEBA WZIaC POD UWAGE!!!!
-        return this.dataUrodzenia.getYear() - p.dataUrodzenia.getYear();
+        int porownajNazwisko = this.getNazwisko().compareTo(p.getNazwisko());
+
+        return porownajNazwisko != 0 ? porownajNazwisko : this.dataUrodzenia.getYear() - p.dataUrodzenia.getYear();
+
+
     }
 
 }
