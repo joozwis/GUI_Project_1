@@ -1,9 +1,11 @@
 import exceptions.IncorrectBirthYearException;
+import exceptions.ValidationException;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public abstract class Pracownik implements Comparable<Pracownik> {
 
@@ -45,24 +47,37 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     }
 
     public void setImie(String imie) {
-        this.imie = imie;
+        if (validateNameAndSurname(imie, "imie"))
+            this.imie = imie;
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
+        if (validateNameAndSurname(nazwisko, "nazwisko"))
+            this.nazwisko = nazwisko;
+    }
+
+    private boolean validateNameAndSurname(String value, String fieldName) {
+        String regex = "^[a-zA-Z][a-zA-Z ]*$";
+        if (!(Pattern.matches(regex, value))) {
+            throw new ValidationException("Niepoprawne " + fieldName + ", wprawodz prawidlowe dane!");
+        }
+
+        return true;
+
     }
 
     @Override
     public int compareTo(Pracownik p) {
-        int porownajImie = this.getImie().compareTo(p.getImie());
-        if (porownajImie != 0) {
-            return porownajImie;
+        int porownajImiona = this.getImie().compareTo(p.getImie());
+        if (porownajImiona != 0) {
+            return porownajImiona;
         }
-        int porownajNazwisko = this.getNazwisko().compareTo(p.getNazwisko());
+        int porownajNazwiska = this.getNazwisko().compareTo(p.getNazwisko());
 
-        return porownajNazwisko != 0 ? porownajNazwisko : this.dataUrodzenia.getYear() - p.dataUrodzenia.getYear();
+        return porownajNazwiska != 0 ? porownajNazwiska : this.dataUrodzenia.getYear() - p.dataUrodzenia.getYear();
 
 
     }
+
 
 }

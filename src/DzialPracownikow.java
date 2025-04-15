@@ -4,7 +4,7 @@ import exceptions.NotUniqueNameException;
 import java.util.*;
 
 public class DzialPracownikow {
-    static Set<String> unikalnyDzial = new HashSet<>();
+    static Set<String> czyNazwaDzialuJestUnikalna = new HashSet<>();
     private String nazwa;
     private List<Pracownik> listaPracownikow;
 
@@ -18,16 +18,17 @@ public class DzialPracownikow {
     /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
     /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
 
-    private boolean czyDzialJestUnikalny(String nazwaDzialu) {
-        return unikalnyDzial.contains(nazwaDzialu.toLowerCase());
+    static protected boolean czyNazwaJestUnikalna(String nazwa, Set<String> unikalnySet) {
+        return unikalnySet.contains(nazwa);
     }
 
-    public DzialPracownikow utworzDzial(String nazwaDzialu) {
-        if (!czyDzialJestUnikalny(nazwaDzialu.toLowerCase()))
+    public DzialPracownikow utworzDzial(String nazwaDzialu, Set<String> unikalnySet) {
+        if (!czyNazwaJestUnikalna(nazwaDzialu.toLowerCase(), unikalnySet))
             throw new NotUniqueNameException("Dzial o takiej nazwie znajduje sie juz w naszej bazie!");
 
+
         System.out.println("Dzial o nazwie: " + nazwaDzialu + "  zostal utworzony!");
-        unikalnyDzial.add(nazwaDzialu.toLowerCase());
+        czyNazwaDzialuJestUnikalna.add(nazwaDzialu.toLowerCase());
         return new DzialPracownikow(nazwaDzialu.toLowerCase());
     }
 
