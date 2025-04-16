@@ -1,4 +1,4 @@
-public class Recepcjonista extends Pracownik {
+public class Recepcjonista extends Pracownik implements RejestrZwyklychPracownikow {
     private String login;
     private String haslo;
     private String initial;
@@ -8,12 +8,12 @@ public class Recepcjonista extends Pracownik {
         this.login = login;
         this.haslo = haslo;
         this.initial = createInitial();
+        dzialPracownikow.dodajPracownikaDoDzialu(this);
     }
 
     public String createInitial() {
         return super.getImie().charAt(0) + super.getNazwisko().charAt(0) + "";
     }
-
 
     public void setImie(String imie) {
         super.setImie(imie);

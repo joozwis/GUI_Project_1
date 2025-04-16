@@ -1,7 +1,9 @@
+import exceptions.DuplicateElementException;
 import exceptions.EmptyListException;
 import exceptions.NotUniqueNameException;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class DzialPracownikow {
     static Set<String> czyNazwaDzialuJestUnikalna = new HashSet<>();
@@ -18,12 +20,34 @@ public class DzialPracownikow {
     /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
     /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
 
+    public void dodajPracownikaDoDzialu(Pracownik pracownik) {
+        if (this.listaPracownikow.contains(pracownik))
+            throw new DuplicateElementException("Ten pracownik jest juz dodany do listy.");
+
+        this.listaPracownikow.add(pracownik);
+    }
+
+    static protected boolean czyNazwaJestUnikalna(String nazwa) {
+        return czyNazwaDzialuJestUnikalna.contains(nazwa);
+    }
+
     static protected boolean czyNazwaJestUnikalna(String nazwa, Set<String> unikalnySet) {
         return unikalnySet.contains(nazwa);
     }
 
-    public DzialPracownikow utworzDzial(String nazwaDzialu, Set<String> unikalnySet) {
-        if (!czyNazwaJestUnikalna(nazwaDzialu.toLowerCase(), unikalnySet))
+
+    static DzialPracownikow utworzDzial(String nazwaDzialu) {
+        if (czyNazwaJestUnikalna(nazwaDzialu.toLowerCase()))
+            throw new NotUniqueNameException("Dzial o takiej nazwie znajduje sie juz w naszej bazie!");
+
+
+        System.out.println("Dzial o nazwie: " + nazwaDzialu.toUpperCase() + " zostal utworzony!");
+        czyNazwaDzialuJestUnikalna.add(nazwaDzialu.toLowerCase());
+        return new DzialPracownikow(nazwaDzialu.toLowerCase());
+    }
+
+    public static DzialPracownikow utworzDzial(String nazwaDzialu, Set<String> uniklanySet) {
+        if (!czyNazwaJestUnikalna(nazwaDzialu.toLowerCase()))
             throw new NotUniqueNameException("Dzial o takiej nazwie znajduje sie juz w naszej bazie!");
 
 
@@ -37,10 +61,11 @@ public class DzialPracownikow {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
 
-        System.out.println("\t\t===== LISTA PRACOWNIKÓW DZIAŁU" + this.nazwa.toUpperCase() + " =====");
-        this.listaPracownikow.forEach(pracownik -> {
-            int index = 1;
-            System.out.println(index++ + ". Pracownik: " + pracownik.getImie() + ", wiek: " + pracownik.getWiek());
+        System.out.println("\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====");
+
+        IntStream.range(0, this.listaPracownikow.size()).forEach(i -> {
+            Pracownik aktualnyPracownik = this.listaPracownikow.get(i);
+            System.out.println(i + 1 + ". Pracownik: " + aktualnyPracownik.getImie() + ", wiek: " + aktualnyPracownik.getWiek());
         });
     }
 

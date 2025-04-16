@@ -5,9 +5,10 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
-public abstract class Pracownik implements Comparable<Pracownik> {
+public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieListami {
 
     static List<Pracownik> listaPracownikow = new ArrayList<>();
     private String imie;
@@ -64,6 +65,18 @@ public abstract class Pracownik implements Comparable<Pracownik> {
 
         return true;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Pracownik pracownik = (Pracownik) o;
+        return czyZdrowy == pracownik.czyZdrowy && Objects.equals(imie, pracownik.imie) && Objects.equals(nazwisko, pracownik.nazwisko) && Objects.equals(dataUrodzenia, pracownik.dataUrodzenia) && Objects.equals(dzialPracownikow, pracownik.dzialPracownikow);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imie, nazwisko, dataUrodzenia, dzialPracownikow, czyZdrowy);
     }
 
     @Override

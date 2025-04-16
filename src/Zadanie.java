@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class Zadanie extends Thread {
+public class Zadanie extends Thread implements ZarzadzanieListami {
     String nazwa;
     String opis;
     Stan stan;
