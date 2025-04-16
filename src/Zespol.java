@@ -1,4 +1,5 @@
 import exceptions.DuplicateElementException;
+import exceptions.InvalidEmployeeTypeException;
 import exceptions.NotUniqueNameException;
 
 import java.util.*;
@@ -9,7 +10,7 @@ public class Zespol implements ZarzadzanieListami {
     static Set<String> czyNazwaZespoluJestUnikalna = new HashSet<>();
     private String nazwa;
     private Manager manager;
-    List<Pracownik> listaPracownikow;
+    private List<Pracownik> listaPracownikow;
 
 
     private Zespol(String nazwa, Manager manager) {
@@ -18,24 +19,30 @@ public class Zespol implements ZarzadzanieListami {
         this.listaPracownikow = new ArrayList<>();
     }
 
-    public Zespol utworzNowyZespol(String nazwa, Manager manager) {
-        if (!DzialPracownikow.czyNazwaJestUnikalna(nazwa.toLowerCase(), czyNazwaZespoluJestUnikalna))
+    static Zespol utworzNowyZespol(String nazwa, Manager manager) {
+        if (DzialPracownikow.czyNazwaJestUnikalna(nazwa.toLowerCase(), czyNazwaZespoluJestUnikalna)) {
+            System.out.println(czyNazwaZespoluJestUnikalna);
             throw new NotUniqueNameException("Zespol o tej nazwie juz istnieje!");
+        }
 
         czyNazwaZespoluJestUnikalna.add(nazwa.toLowerCase());
-        manager.addZespol(this);
-        return new Zespol(nazwa, manager);
+        Zespol nowyZespol = new Zespol(nazwa, manager);
+        manager.addZespol(nowyZespol);
+        return nowyZespol;
     }
 
 
-    public <T extends Pracownik & RejestrZwyklychPracownikow> void dodajPracownika(T pracownik) {
+    public <T extends Pracownik> void dodajPracownika(T pracownik) {
+        if (pracownik instanceof Manager)
+            throw new InvalidEmployeeTypeException("Manager nie może być dodany jako zwykły pracownik");
+
         if (this.listaPracownikow.contains(pracownik))
             throw new DuplicateElementException("Ten pracownik zostal juz dodany do listy!");
 
         this.listaPracownikow.add(pracownik);
     }
 
-    public <T extends Pracownik & RejestrZwyklychPracownikow> void dodajPracownika(List<T> nowaListaPracownikow) {
+    public <T extends Pracownik> void dodajPracownika(List<T> nowaListaPracownikow) {
         this.listaPracownikow = Stream.concat(this.listaPracownikow.stream(), nowaListaPracownikow.stream()).distinct().toList();
     }
 

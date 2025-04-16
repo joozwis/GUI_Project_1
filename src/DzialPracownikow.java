@@ -15,11 +15,6 @@ public class DzialPracownikow {
         this.listaPracownikow = new ArrayList<>();
     }
 
-    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
-    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
-    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
-    /// ///  ZAIMPLEMENTOWAC DODANIE PRACOWNIKA DO DZIALU?????
-
     public void dodajPracownikaDoDzialu(Pracownik pracownik) {
         if (this.listaPracownikow.contains(pracownik))
             throw new DuplicateElementException("Ten pracownik jest juz dodany do listy.");

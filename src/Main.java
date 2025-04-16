@@ -21,7 +21,19 @@ public class Main {
         Trener trener4 = new Trener("Natalia", "Kamińska", 25, 5, 1989, dzialTrenerzy, "Fitness");
         Trener trener5 = new Trener("Michał", "Kaczmarek", 7, 8, 1983, dzialTrenerzy, "Boks");
 
-        dzialFinanse.wypiszPracownikow();
 
+        // Tworzenie obiektów klasy Manager
+        Manager manager1 = new Manager("Adam", "Szymański", 14, 1, 1980, dzialTrenerzy, "aszymanski", "manager123");
+        Manager manager2 = new Manager("Katarzyna", "Jankowska", 30, 10, 1978, dzialMarketing, "kjankowska", "manager456");
+        Manager manager3 = new Manager("Robert", "Mazur", 8, 6, 1975, dzialFinanse, "rmazur", "manager789");
+
+        Zespol zespol1 = Zespol.utworzNowyZespol("Zespół programistów", manager1);
+        Zespol zespol2 = Zespol.utworzNowyZespol("Zespół marketingu cyfrowego", manager2);
+        Zespol zespol3 = Zespol.utworzNowyZespol("Zespół finansów", manager3);
+
+        zespol1.dodajPracownika(trener1);
+        zespol1.dodajPracownika(trener2);
+        zespol1.dodajPracownika(recepcjonista1);
+        zespol1.wyswietlListePracownikow();
     }
 }

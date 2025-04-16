@@ -1,4 +1,6 @@
-public class Recepcjonista extends Pracownik implements RejestrZwyklychPracownikow {
+import java.util.Objects;
+
+public class Recepcjonista extends Pracownik {
     private String login;
     private String haslo;
     private String initial;
@@ -24,5 +26,18 @@ public class Recepcjonista extends Pracownik implements RejestrZwyklychPracownik
     public void setNazwisko(String nazwisko) {
         super.setNazwisko(nazwisko);
         this.initial = createInitial();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Recepcjonista that = (Recepcjonista) o;
+        return Objects.equals(login, that.login) && Objects.equals(haslo, that.haslo) && Objects.equals(initial, that.initial);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), login, haslo, initial);
     }
 }

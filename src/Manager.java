@@ -1,6 +1,8 @@
 import exceptions.EmptyListException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Manager extends Recepcjonista {
@@ -9,7 +11,8 @@ public class Manager extends Recepcjonista {
 
     public Manager(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow, String login, String haslo) {
         super(imie, nazwisko, dzien, miesiac, rok, dzialPracownikow, login, haslo);
-        dzialPracownikow.dodajPracownikaDoDzialu(this);
+        this.listaZespolow = new ArrayList<>();
+        this.listaZadan = new ArrayList<>();
     }
 
 
