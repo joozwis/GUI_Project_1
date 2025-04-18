@@ -1,9 +1,9 @@
 import exceptions.DuplicateElementException;
+import exceptions.EmptyListException;
 import exceptions.InvalidEmployeeTypeException;
 import exceptions.NotUniqueNameException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Zespol implements ZarzadzanieListami {
@@ -11,12 +11,15 @@ public class Zespol implements ZarzadzanieListami {
     private String nazwa;
     private Manager manager;
     private List<Pracownik> listaPracownikow;
+    private static int counter;
+    private int id;
 
 
     private Zespol(String nazwa, Manager manager) {
         this.nazwa = nazwa;
         this.manager = manager;
         this.listaPracownikow = new ArrayList<>();
+        this.id = counter++;
     }
 
     static Zespol utworzNowyZespol(String nazwa, Manager manager) {
@@ -53,6 +56,12 @@ public class Zespol implements ZarzadzanieListami {
 
     public void wyswietlListePracownikow() {
         Manager.wyswietlElementyZListy(this.listaPracownikow);
+    }
+
+    public List<Pracownik> getListaPracownikow() {
+        if (this.listaPracownikow.isEmpty()) throw new EmptyListException("Probujesz zwrocic pusta liste!");
+
+        return this.listaPracownikow;
     }
 
 

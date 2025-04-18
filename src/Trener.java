@@ -2,6 +2,7 @@ import java.util.Objects;
 
 public class Trener extends Pracownik {
     private String specjalizacja;
+    private static int counter;
 
     public Trener(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow, String specjalizacja) {
         super(imie, nazwisko, dzien, miesiac, rok, dzialPracownikow);
@@ -15,6 +16,11 @@ public class Trener extends Pracownik {
         if (!super.equals(o)) return false;
         Trener trener = (Trener) o;
         return Objects.equals(specjalizacja, trener.specjalizacja);
+    }
+
+    @Override
+    public int getNextId() {
+        return counter++;
     }
 
     @Override

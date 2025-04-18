@@ -23,6 +23,8 @@ public class Main {
         Trener trener3 = new Trener("Tomasz", "Wójcik", 12, 2, 1984, dzialTrenerzy, "Pływanie");
         Trener trener4 = new Trener("Natalia", "Kamińska", 25, 5, 1989, dzialTrenerzy, "Fitness");
         Trener trener5 = new Trener("Michał", "Kaczmarek", 7, 8, 1983, dzialTrenerzy, "Boks");
+        System.out.println(trener1);
+        System.out.println(trener2);
 
 
         // Tworzenie obiektów klasy Manager
@@ -40,6 +42,6 @@ public class Main {
 //        zespol1.dodajPracownika(trener2);
 //        zespol1.dodajPracownika(recepcjonista1);
         zespol1.dodajPracownika(listaPracownikow);
-        zespol1.wyswietlListePracownikow();
+
     }
 }

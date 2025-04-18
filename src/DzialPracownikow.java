@@ -9,10 +9,13 @@ public class DzialPracownikow {
     static Set<String> czyNazwaDzialuJestUnikalna = new HashSet<>();
     private String nazwa;
     private List<Pracownik> listaPracownikow;
+    private static int counter;
+    private int id;
 
     private DzialPracownikow(String nazwa) {
         this.nazwa = nazwa;
         this.listaPracownikow = new ArrayList<>();
+        this.id = counter++;
     }
 
     public void dodajPracownikaDoDzialu(Pracownik pracownik) {
@@ -35,7 +38,6 @@ public class DzialPracownikow {
         if (czyNazwaJestUnikalna(nazwaDzialu.toLowerCase()))
             throw new NotUniqueNameException("Dzial o takiej nazwie znajduje sie juz w naszej bazie!");
 
-
         System.out.println("Dzial o nazwie: " + nazwaDzialu.toUpperCase() + " zostal utworzony!");
         czyNazwaDzialuJestUnikalna.add(nazwaDzialu.toLowerCase());
         return new DzialPracownikow(nazwaDzialu.toLowerCase());
@@ -51,6 +53,9 @@ public class DzialPracownikow {
         return new DzialPracownikow(nazwaDzialu.toLowerCase());
     }
 
+    public String getNazwa() {
+        return this.nazwa;
+    }
 
     public void wypiszPracownikow() {
         if (listaPracownikow.isEmpty())

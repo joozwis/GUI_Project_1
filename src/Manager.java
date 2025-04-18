@@ -2,12 +2,12 @@ import exceptions.EmptyListException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Manager extends Recepcjonista {
     private List<Zespol> listaZespolow;
     private List<Zadanie> listaZadan;
+    private static int counter;
 
     public Manager(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow, String login, String haslo) {
         super(imie, nazwisko, dzien, miesiac, rok, dzialPracownikow, login, haslo);
@@ -37,5 +37,8 @@ public class Manager extends Recepcjonista {
         });
     }
 
-
+    @Override
+    public int getNextId() {
+        return counter++;
+    }
 }
