@@ -47,14 +47,24 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
         return Period.between(this.dataUrodzenia, LocalDate.now()).getYears();
     }
 
+    public boolean isCzyZdrowy() {
+        return this.czyZdrowy;
+    }
+
+
     public void setImie(String imie) {
         if (validateNameAndSurname(imie, "imie"))
             this.imie = imie;
     }
 
+
     public void setNazwisko(String nazwisko) {
         if (validateNameAndSurname(nazwisko, "nazwisko"))
             this.nazwisko = nazwisko;
+    }
+
+    public void setCzyZdrowy(boolean czyZdrowy) {
+        this.czyZdrowy = czyZdrowy;
     }
 
     private boolean validateNameAndSurname(String value, String fieldName) {

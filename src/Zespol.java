@@ -1,9 +1,9 @@
 import exceptions.DuplicateElementException;
+import exceptions.EmptyListException;
 import exceptions.InvalidEmployeeTypeException;
 import exceptions.NotUniqueNameException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Zespol implements ZarzadzanieListami {
@@ -53,6 +53,12 @@ public class Zespol implements ZarzadzanieListami {
 
     public void wyswietlListePracownikow() {
         Manager.wyswietlElementyZListy(this.listaPracownikow);
+    }
+
+    public List<Pracownik> getListaPracownikow() {
+        if (this.listaPracownikow.isEmpty()) throw new EmptyListException("Probujesz zwrocic pusta liste!");
+
+        return this.listaPracownikow;
     }
 
 
