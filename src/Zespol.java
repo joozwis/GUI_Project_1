@@ -43,6 +43,11 @@ public class Zespol implements ZarzadzanieListami {
     }
 
     public <T extends Pracownik> void dodajPracownika(List<T> nowaListaPracownikow) {
+
+        if (nowaListaPracownikow.stream().anyMatch(pracownik -> pracownik instanceof Manager)) {
+            throw new InvalidEmployeeTypeException("Jedna z osób w liście jest Managerem. Manager nie może być dodany jako zwykły pracownik");
+        }
+
         this.listaPracownikow = Stream.concat(this.listaPracownikow.stream(), nowaListaPracownikow.stream()).distinct().toList();
     }
 
