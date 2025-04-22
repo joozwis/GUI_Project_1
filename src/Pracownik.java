@@ -16,6 +16,7 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
     private LocalDate dataUrodzenia;
     private DzialPracownikow dzialPracownikow;
     private boolean czyZdrowy;
+    private int id;
 
     public Pracownik(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow) {
         int aktualnyRok = LocalDate.now().getYear();
@@ -27,6 +28,7 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
         this.dataUrodzenia = LocalDate.of(rok, miesiac, dzien);
         this.dzialPracownikow = dzialPracownikow;
         this.czyZdrowy = true;
+        this.id = this.getNextId();
         listaPracownikow.add(this);
     }
 
@@ -52,6 +54,13 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
             this.imie = imie;
     }
 
+
+    public boolean isCzyZdrowy() {
+        return this.czyZdrowy;
+    }
+
+    public abstract int getNextId();
+
     public void setNazwisko(String nazwisko) {
         if (validateNameAndSurname(nazwisko, "nazwisko"))
             this.nazwisko = nazwisko;
@@ -64,8 +73,8 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
         }
 
         return true;
-
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -88,9 +97,11 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
         int porownajNazwiska = this.getNazwisko().compareTo(p.getNazwisko());
 
         return porownajNazwiska != 0 ? porownajNazwiska : this.dataUrodzenia.getYear() - p.dataUrodzenia.getYear();
-
-
     }
 
+    @Override
+    public String toString() {
+        return "Pracownik: " + this.imie + " " + this.nazwisko + ", urodzony: " + this.dataUrodzenia + ", pracuje w dziale: " + this.dzialPracownikow.getNazwa() + ".\nJego ID pracownika: " + this.id + "\nCzy pracownik jest chory: " + this.isCzyZdrowy();
+    }
 
 }
