@@ -27,4 +27,9 @@ public class Trener extends Pracownik {
     public int hashCode() {
         return Objects.hash(super.hashCode(), specjalizacja);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nSpecjalizacja: " + this.specjalizacja;
+    }
 }

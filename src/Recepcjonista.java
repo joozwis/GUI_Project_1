@@ -16,7 +16,7 @@ public class Recepcjonista extends Pracownik {
     }
 
     public String createInitial() {
-        return super.getImie().charAt(0) + super.getNazwisko().charAt(0) + "";
+        return (super.getImie().charAt(0) + "") + (super.getNazwisko().charAt(0) + "");
     }
 
     public void setImie(String imie) {
@@ -46,5 +46,11 @@ public class Recepcjonista extends Pracownik {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), login, haslo, initial);
+    }
+
+    @Override
+    public String toString() {
+        String additionalInfo = this instanceof Manager ? "" : "\nInicjały: " + this.initial;
+        return super.toString() + additionalInfo;
     }
 }

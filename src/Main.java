@@ -23,8 +23,13 @@ public class Main {
         Trener trener3 = new Trener("Tomasz", "Wójcik", 12, 2, 1984, dzialTrenerzy, "Pływanie");
         Trener trener4 = new Trener("Natalia", "Kamińska", 25, 5, 1989, dzialTrenerzy, "Fitness");
         Trener trener5 = new Trener("Michał", "Kaczmarek", 7, 8, 1983, dzialTrenerzy, "Boks");
-        System.out.println(trener1);
-        System.out.println(trener2);
+//        System.out.println(recepcjonista1);
+//        System.out.println("======");
+//        System.out.println(recepcjonista2);
+//        System.out.println("======");
+//        System.out.println(recepcjonista3);
+//        System.out.println("======");
+//        System.out.println(recepcjonista4);
 
 
         // Tworzenie obiektów klasy Manager
@@ -37,11 +42,22 @@ public class Main {
         Zespol zespol1 = Zespol.utworzNowyZespol("Zespół programistów", manager1);
         Zespol zespol2 = Zespol.utworzNowyZespol("Zespół marketingu cyfrowego", manager2);
         Zespol zespol3 = Zespol.utworzNowyZespol("Zespół finansów", manager3);
+
 //
 //        zespol1.dodajPracownika(trener1);
 //        zespol1.dodajPracownika(trener2);
 //        zespol1.dodajPracownika(recepcjonista1);
-        zespol1.dodajPracownika(listaPracownikow);
+//        zespol1.dodajPracownika(listaPracownikow);
+        System.out.println(zespol1);
+        zespol1.dodajPracownika(recepcjonista1);
+        zespol1.dodajPracownika(recepcjonista2);
+        System.out.println(zespol1);
+//        System.out.println("====");
+//        System.out.println(manager1);
+//        System.out.println("===");
+//        System.out.println(manager2);
+//        System.out.println("===");
+
 
     }
 }

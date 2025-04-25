@@ -4,6 +4,7 @@ import exceptions.InvalidEmployeeTypeException;
 import exceptions.NotUniqueNameException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Zespol implements ZarzadzanieListami {
@@ -75,5 +76,21 @@ public class Zespol implements ZarzadzanieListami {
     @Override
     public int hashCode() {
         return Objects.hash(nazwa, manager);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (this.listaPracownikow.isEmpty()) {
+            stringBuilder.append("Lista pracowników jest pusta");
+        } else {
+            String listaPracownikowString = listaPracownikow.stream().map(el -> el.getImie() + " " + el.getNazwisko()).collect(Collectors.joining(", "));
+            stringBuilder.append("Lista pracowników: " + listaPracownikowString);
+        }
+
+        return "Nazwa zespołu: " + this.nazwa
+                + "\nManager zespołu: " + this.manager.getImie() + " " + this.manager.getNazwisko() +
+                "\n" + stringBuilder;
+
     }
 }

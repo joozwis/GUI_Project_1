@@ -101,7 +101,9 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
 
     @Override
     public String toString() {
-        return "Pracownik: " + this.imie + " " + this.nazwisko + ", urodzony: " + this.dataUrodzenia + ", pracuje w dziale: " + this.dzialPracownikow.getNazwa() + ".\nJego ID pracownika: " + this.id + "\nCzy pracownik jest chory: " + this.isCzyZdrowy();
+        return "Pracownik: " + this.imie + " " + this.nazwisko + ", urodzony: " + this.dataUrodzenia + ", pracuje w dziale: " + this.dzialPracownikow.getNazwa() + "." +
+                "\nID pracownika: " + this.id +
+                "\nCzy pracownik jest zdrowy: " + this.isCzyZdrowy();
     }
 
 }

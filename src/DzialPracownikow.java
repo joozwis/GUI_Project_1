@@ -57,16 +57,19 @@ public class DzialPracownikow {
         return this.nazwa;
     }
 
-    public void wypiszPracownikow() {
+    public String wypiszPracownikow() {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
 
-        System.out.println("\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====");
+//        String headline = "\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====";
 
+        StringBuilder stringBuilder = new StringBuilder("\n\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====\n");
         IntStream.range(0, this.listaPracownikow.size()).forEach(i -> {
             Pracownik aktualnyPracownik = this.listaPracownikow.get(i);
-            System.out.println(i + 1 + ". Pracownik: " + aktualnyPracownik.getImie() + ", wiek: " + aktualnyPracownik.getWiek());
+
+            stringBuilder.append(i + 1).append(". Pracownik: ").append(aktualnyPracownik.getImie()).append(", wiek: ").append(aktualnyPracownik.getWiek()).append("\n");
         });
+        return stringBuilder.toString();
     }
 
     @Override
@@ -79,5 +82,11 @@ public class DzialPracownikow {
     @Override
     public int hashCode() {
         return Objects.hashCode(nazwa);
+    }
+
+    @Override
+    public String toString() {
+
+        return "Nazwa dzialu: " + this.nazwa + wypiszPracownikow();
     }
 }
