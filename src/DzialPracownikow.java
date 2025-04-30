@@ -60,9 +60,7 @@ public class DzialPracownikow {
     public String wypiszPracownikow() {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
-
-//        String headline = "\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====";
-
+        
         StringBuilder stringBuilder = new StringBuilder("\n\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====\n");
         IntStream.range(0, this.listaPracownikow.size()).forEach(i -> {
             Pracownik aktualnyPracownik = this.listaPracownikow.get(i);

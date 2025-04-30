@@ -85,7 +85,7 @@ public class Zespol implements ZarzadzanieListami {
             stringBuilder.append("Lista pracowników jest pusta");
         } else {
             String listaPracownikowString = listaPracownikow.stream().map(el -> el.getImie() + " " + el.getNazwisko()).collect(Collectors.joining(", "));
-            stringBuilder.append("Lista pracowników: " + listaPracownikowString);
+            stringBuilder.append("Lista pracowników: ").append(listaPracownikowString);
         }
 
         return "Nazwa zespołu: " + this.nazwa

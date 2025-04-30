@@ -14,6 +14,7 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
     private Zespol zespol;
     private static int counter;
     private int id;
+    boolean zatwierdzenie;
 
 
     public Zadanie(String nazwa, String opis, boolean zatwierdzenie, Zespol zespol) {
@@ -26,12 +27,8 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
         if (zespol.getListaPracownikow().isEmpty())
             throw new EmptyListException("Zespol, ktory nie ma pracownikow, nie moze zaczac zadania!");
         else this.zespol = zespol;
-
-        if (zatwierdzenie) {
-            this.stan = Stan.ROZPOCZETE;
-        } else {
-            this.stan = Stan.UTWORZONE;
-        }
+        this.zatwierdzenie = zatwierdzenie;
+        this.stan = Stan.UTWORZONE;
     }
 
     public Zadanie(String nazwa, Zespol zespol) {
@@ -42,16 +39,24 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
         this.dataRozpoczecia = LocalDateTime.now();
         this.czasWykonania = randomNumber;
         this.id = counter++;
+        this.zatwierdzenie = false;
+        this.stan = Stan.UTWORZONE;
 
         if (zespol.getListaPracownikow().isEmpty())
             throw new EmptyListException("Zespol, ktory nie ma pracownikow, nie moze zaczac zadania!");
         else this.zespol = zespol;
-
-
     }
 
     public String getStan() {
         return "Aktualny status zadania: " + this.stan;
+    }
+
+    public boolean isZatwierdzenie() {
+        return this.zatwierdzenie;
+    }
+
+    public int getCurrElementId() {
+        return this.id;
     }
 
     @Override
@@ -59,11 +64,8 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
 
         if (this.zespol.getListaPracownikow().stream().anyMatch(pracownik -> !pracownik.isCzyZdrowy())) {
             throw new Error("Chociaz jeden z pracownikow nie jest zdrowy! Wszyscy pracownicy musza byc zdrowi, aby rozpoczac zadanie!");
-
         }
-
-        if (this.stan == Stan.UTWORZONE) this.stan = Stan.ROZPOCZETE;
-
+        this.stan = Stan.ROZPOCZETE;
         System.out.println("Zadanie zostalo rozpoczęte. Bedzie trwalo: " + this.czasWykonania + " sekund.");
         IntStream.range(0, this.czasWykonania).forEach(i -> {
             System.out.println("Pozostało jeszcze: " + (this.czasWykonania - i) + " sekund.");
