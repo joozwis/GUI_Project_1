@@ -1,16 +1,18 @@
+import exceptions.EmptyListException;
 import exceptions.IncorrectTaskIdException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 public class Praca implements Runnable {
     private List<Zadanie> listaZadan;
     private Zespol zespol;
     private String opis;
     private static int counter;
-    static Map<Integer, Zadanie> mapaZadan = new ConcurrentHashMap<>();
+    static Map<Integer, Zadanie> mapaZadan = new HashMap<>();
 
     public Praca(List<Zadanie> listaZadan, Zespol zespol, String opis) {
         this.listaZadan = listaZadan;
@@ -19,7 +21,7 @@ public class Praca implements Runnable {
 
         if (!listaZadan.isEmpty())
             listaZadan.forEach(el -> {
-                mapaZadan.put(el.getCurrElementId(), el);
+                mapaZadan.computeIfAbsent(el.getCurrElementId(), (item) -> el);
             });
     }
 
@@ -30,9 +32,12 @@ public class Praca implements Runnable {
 
     }
 
-    public void dodajZadanie(Zadanie zadanie) {
-        listaZadan.add(zadanie);
-        mapaZadan.put(zadanie.getCurrElementId(), zadanie);
+    public synchronized void dodajZadanie(Zadanie zadanie) {
+        if (!listaZadan.contains(zadanie)) {
+            listaZadan.add(zadanie);
+            mapaZadan.computeIfAbsent(zadanie.getCurrElementId(), (item) -> zadanie);
+        }
+
     }
 
     static Zadanie getTaskById(int id) {
@@ -44,8 +49,16 @@ public class Praca implements Runnable {
 
 
     @Override
-    public void run() {
+    public synchronized void run() {
 
+        if (!listaZadan.isEmpty()) throw new EmptyListException("Lista z zadaniami jest pusta! Dodaj zadanie!");
 
+        listaZadan.forEach(zadanie -> {
+            if (!zadanie.isZatwierdzenie()) {
+                System.out.println("Zadanie nie jest zatwierdzone, zostanie pominiete!");
+            } else {
+                zadanie.start();
+            }
+        });
     }
 }

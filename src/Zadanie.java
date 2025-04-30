@@ -2,6 +2,7 @@
 import exceptions.EmptyListException;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Zadanie extends Thread implements ZarzadzanieListami {
@@ -79,5 +80,17 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
         this.stan = Stan.ZAKONCZONE;
         this.dataZakonczenia = LocalDateTime.now();
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Zadanie zadanie = (Zadanie) o;
+        return czasWykonania == zadanie.czasWykonania && id == zadanie.id && zatwierdzenie == zadanie.zatwierdzenie && Objects.equals(nazwa, zadanie.nazwa) && Objects.equals(opis, zadanie.opis) && stan == zadanie.stan && Objects.equals(dataRozpoczecia, zadanie.dataRozpoczecia) && Objects.equals(dataZakonczenia, zadanie.dataZakonczenia) && Objects.equals(zespol, zadanie.zespol);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nazwa, opis, stan, dataRozpoczecia, dataZakonczenia, czasWykonania, zespol, id, zatwierdzenie);
     }
 }
