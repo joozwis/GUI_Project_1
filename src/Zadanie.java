@@ -33,19 +33,7 @@ public class Zadanie extends Thread implements ZarzadzanieListami {
     }
 
     public Zadanie(String nazwa, Zespol zespol) {
-        int randomNumber = (int) ((Math.random() * 6)) + 3;
-        this.nazwa = nazwa;
-        this.stan = Stan.UTWORZONE;
-        this.opis = "Dodano zadanie";
-        this.dataRozpoczecia = LocalDateTime.now();
-        this.czasWykonania = randomNumber;
-        this.id = counter++;
-        this.zatwierdzenie = false;
-        this.stan = Stan.UTWORZONE;
-
-        if (zespol.getListaPracownikow().isEmpty())
-            throw new EmptyListException("Zespol, ktory nie ma pracownikow, nie moze zaczac zadania!");
-        else this.zespol = zespol;
+        this(nazwa, "Dodano zadanie", false, zespol);
     }
 
     public String getStan() {
