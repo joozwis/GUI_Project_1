@@ -73,7 +73,6 @@ public class Zespol implements ZarzadzanieListami, Iterable<Pracownik> {
     }
 
     public void wyswietlListePracownikow() {
-//        Manager.wyswietlElementyZListy(this.listaPracownikow);
         for (Pracownik pracownik : listaPracownikow) {
             System.out.println(pracownik);
         }
