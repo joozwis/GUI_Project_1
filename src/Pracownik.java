@@ -16,6 +16,7 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
     private LocalDate dataUrodzenia;
     private DzialPracownikow dzialPracownikow;
     private boolean czyZdrowy;
+    private List<Zadanie> historiaZadan = new ArrayList<>();
     private int id;
 
     public Pracownik(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow) {
@@ -54,12 +55,19 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
             this.imie = imie;
     }
 
+    public void setCzyZdrowy(boolean czyZdrowy) {
+        this.czyZdrowy = czyZdrowy;
+    }
 
     public boolean isCzyZdrowy() {
         return this.czyZdrowy;
     }
 
     public abstract int getNextId();
+
+    public List<Zadanie> getHistoriaZadan() {
+        return this.historiaZadan;
+    }
 
     public void setNazwisko(String nazwisko) {
         if (validateNameAndSurname(nazwisko, "nazwisko"))
@@ -73,6 +81,10 @@ public abstract class Pracownik implements Comparable<Pracownik>, ZarzadzanieLis
         }
 
         return true;
+    }
+
+    void dodajDoHistorii(Zadanie z) {
+        this.historiaZadan.add(z);
     }
 
 

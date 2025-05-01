@@ -23,6 +23,9 @@ public class DzialPracownikow {
             throw new DuplicateElementException("Ten pracownik jest juz dodany do listy.");
 
         this.listaPracownikow.add(pracownik);
+
+        LogOperacji.zapiszOperacje("Dodanie_Pracownika", "Dodano pracownika " + pracownik.getImie() + " " +
+                pracownik.getNazwisko() + " do dzialu " + this.nazwa);
     }
 
     static protected boolean czyNazwaJestUnikalna(String nazwa) {
@@ -40,8 +43,11 @@ public class DzialPracownikow {
 
         System.out.println("Dzial o nazwie: " + nazwaDzialu.toUpperCase() + " zostal utworzony!");
         czyNazwaDzialuJestUnikalna.add(nazwaDzialu.toLowerCase());
+
+        LogOperacji.zapiszOperacje("Utworzenie_Dzialu", "Utworzono dzial o nazwie: " + nazwaDzialu.toUpperCase());
         return new DzialPracownikow(nazwaDzialu.toLowerCase());
     }
+
 
     public static DzialPracownikow utworzDzial(String nazwaDzialu, Set<String> uniklanySet) {
         if (!czyNazwaJestUnikalna(nazwaDzialu.toLowerCase()))
@@ -60,13 +66,13 @@ public class DzialPracownikow {
     public String wypiszPracownikow() {
         if (listaPracownikow.isEmpty())
             throw new EmptyListException("Lista pracownikow jest pusta! Wpierw dodaj pierwszego pracownika!");
-        
+
         StringBuilder stringBuilder = new StringBuilder("\n\t\t===== LISTA PRACOWNIKÓW DZIAŁU " + this.nazwa.toUpperCase() + " =====\n");
         IntStream.range(0, this.listaPracownikow.size()).forEach(i -> {
             Pracownik aktualnyPracownik = this.listaPracownikow.get(i);
-
             stringBuilder.append(i + 1).append(". Pracownik: ").append(aktualnyPracownik.getImie()).append(", wiek: ").append(aktualnyPracownik.getWiek()).append("\n");
         });
+        LogOperacji.zapiszOperacje("Wyswietlenie_Pracownikow", "Wyswietlono liste pracownikow dzialu " + this.nazwa);
         return stringBuilder.toString();
     }
 

@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Zespol implements ZarzadzanieListami {
+public class Zespol implements ZarzadzanieListami, Iterable<Pracownik> {
     static Set<String> czyNazwaZespoluJestUnikalna = new HashSet<>();
     private String nazwa;
     private Manager manager;
@@ -32,6 +32,10 @@ public class Zespol implements ZarzadzanieListami {
         czyNazwaZespoluJestUnikalna.add(nazwa.toLowerCase());
         Zespol nowyZespol = new Zespol(nazwa, manager);
         manager.addZespol(nowyZespol);
+
+        LogOperacji.zapiszOperacje("Utworzenie_Zespolu", "Utworzono zespol: " + nazwa + " z managerem: " +
+                manager.getImie() + " " + manager.getNazwisko());
+
         return nowyZespol;
     }
 
@@ -44,19 +48,35 @@ public class Zespol implements ZarzadzanieListami {
             throw new DuplicateElementException("Ten pracownik zostal juz dodany do listy!");
 
         this.listaPracownikow.add(pracownik);
+
+        LogOperacji.zapiszOperacje("Dodanie_Pracownika_Do_Zespolu", "Dodano pracownika " +
+                pracownik.getImie() + " " + pracownik.getNazwisko() + " do zespolu " + this.nazwa);
     }
 
     public <T extends Pracownik> void dodajPracownika(List<T> nowaListaPracownikow) {
-
         if (nowaListaPracownikow.stream().anyMatch(pracownik -> pracownik instanceof Manager)) {
             throw new InvalidEmployeeTypeException("Jedna z osób w liście jest Managerem. Manager nie może być dodany jako zwykły pracownik");
         }
 
+        int staraPulaSize = this.listaPracownikow.size();
+
         this.listaPracownikow = Stream.concat(this.listaPracownikow.stream(), nowaListaPracownikow.stream()).distinct().toList();
+
+        int ileNowych = this.listaPracownikow.size() - staraPulaSize;
+
+        if (ileNowych > 0) {
+            String nazwiskaPracownikow = nowaListaPracownikow.stream().map(p -> p.getImie() + " " + p.getNazwisko()).collect(Collectors.joining(", "));
+
+            LogOperacji.zapiszOperacje("Dodanie_Listy_Pracownikow",
+                    "Dodano " + ileNowych + " nowych pracowników do zespołu " + this.nazwa + ": " + nazwiskaPracownikow);
+        }
     }
 
     public void wyswietlListePracownikow() {
-        Manager.wyswietlElementyZListy(this.listaPracownikow);
+//        Manager.wyswietlElementyZListy(this.listaPracownikow);
+        for (Pracownik pracownik : listaPracownikow) {
+            System.out.println(pracownik);
+        }
     }
 
     public List<Pracownik> getListaPracownikow() {
@@ -65,6 +85,9 @@ public class Zespol implements ZarzadzanieListami {
         return this.listaPracownikow;
     }
 
+    public String getNazwa() {
+        return nazwa;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -92,5 +115,10 @@ public class Zespol implements ZarzadzanieListami {
                 + "\nManager zespołu: " + this.manager.getImie() + " " + this.manager.getNazwisko() +
                 "\n" + stringBuilder;
 
+    }
+
+    @Override
+    public Iterator<Pracownik> iterator() {
+        return listaPracownikow.iterator();
     }
 }

@@ -1,10 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Recepcjonista extends Pracownik {
+public class Recepcjonista extends Pracownik implements IDobryPracownik {
     private String login;
     private String haslo;
     private String initial;
     private static int counter;
+    private List<Zadanie> wykonaneZadania = new ArrayList<>();
+    private int lacznyCzasSek;
 
 
     public Recepcjonista(String imie, String nazwisko, int dzien, int miesiac, int rok, DzialPracownikow dzialPracownikow, String login, String haslo) {
@@ -52,5 +56,27 @@ public class Recepcjonista extends Pracownik {
     public String toString() {
         String additionalInfo = this instanceof Manager ? "" : "\nInicjały: " + this.initial;
         return super.toString() + additionalInfo;
+    }
+
+    @Override
+    public synchronized void completeTask(Zadanie zadanie) {
+        wykonaneZadania.add(zadanie);
+        lacznyCzasSek += zadanie.getCzasWykonania();
+        dodajDoHistorii(zadanie);
+        LogOperacji.zapiszOperacje("Wykonanie_Zadania", this.getClass().getSimpleName() + " " +
+                this.getImie() + " " + this.getNazwisko() + " wykonał zadanie: " + zadanie.getNazwa());
+    }
+
+    @Override
+    public synchronized String generateDailyReport() {
+        return "Recepcjonista " + getImie() +
+                " zakończył dziś " + wykonaneZadania.size() + " zadań.";
+    }
+
+    @Override
+    public synchronized double getEfficiency() {
+        return wykonaneZadania.isEmpty()
+                ? 0.0
+                : (double) wykonaneZadania.size() / lacznyCzasSek;
     }
 }
